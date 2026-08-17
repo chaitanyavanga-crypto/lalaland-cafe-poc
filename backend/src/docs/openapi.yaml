@@ -1,0 +1,96 @@
+openapi: 3.0.3
+info:
+  title: Lalaland Cafe API
+  version: "1.0.0"
+  description: >
+    REST API for the Lalaland Cafe & Drink Studio POC. This file documents the
+    Auth module fully as the reference pattern for the rest of the API — see
+    docs/API_DOCUMENTATION.md at the project root for the complete endpoint list
+    (Menu, Orders, Inventory) in Markdown form until the full OpenAPI spec is
+    generated in a follow-up pass.
+servers:
+  - url: http://localhost:5000/api/v1
+paths:
+  /auth/register:
+    post:
+      summary: Register a new customer account
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [fullName, email, password]
+              properties:
+                fullName: { type: string, example: "Chloe Customer" }
+                email: { type: string, format: email }
+                phone: { type: string }
+                password: { type: string, format: password, minLength: 8 }
+      responses:
+        '201':
+          description: Account created
+        '409':
+          description: Email already registered
+  /auth/login:
+    post:
+      summary: Log in and receive access + refresh tokens
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+      responses:
+        '200':
+          description: Authenticated
+        '401':
+          description: Invalid credentials
+  /auth/forgot-password:
+    post:
+      summary: Request a password reset link
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email: { type: string, format: email }
+      responses:
+        '200':
+          description: >
+            Always returns 200 regardless of whether the email exists, to prevent
+            account enumeration.
+  /auth/reset-password:
+    post:
+      summary: Reset password using a token from the forgot-password email
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, password]
+              properties:
+                token: { type: string }
+                password: { type: string, format: password, minLength: 8 }
+      responses:
+        '200':
+          description: Password updated
+        '400':
+          description: Token invalid or expired
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

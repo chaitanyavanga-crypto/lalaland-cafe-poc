@@ -1,0 +1,492 @@
+/* =====================================================================
+   Lalaland Cafe — design tokens
+   Reskinned in the spirit of barista.co.in: deep burgundy/maroon +
+   warm gold on cream, elegant serif display headings over a clean
+   sans body, generous full-bleed banners and rounded pill controls.
+   ===================================================================== */
+:root {
+  --lc-brand: #6b1626;        /* Barista-style deep maroon/burgundy */
+  --lc-brand-dark: #430d17;
+  --lc-gold: #c9973a;         /* warm gold accent */
+  --lc-gold-light: #f6ead0;
+  --lc-accent: #6b1626;       /* alias so existing "accent" usages read maroon */
+  --lc-accent-light: #f6ead0;
+  --lc-cream: #fdf9f3;
+  --lc-cream-dark: #f4e9da;
+  --lc-text: #2a1a14;
+  --lc-text-muted: #7a685d;
+  --lc-danger: #c0392b;
+  --lc-radius: 10px;
+  --lc-shadow-sm: 0 2px 8px rgba(43, 20, 16, 0.08);
+  --lc-shadow-md: 0 10px 28px rgba(43, 20, 16, 0.16);
+  --lc-transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  --lc-font-display: 'Playfair Display', Georgia, serif;
+  --lc-font-body: 'Poppins', system-ui, -apple-system, sans-serif;
+
+  /* Re-theme Bootstrap's own palette so default "primary" controls
+     (buttons, badges, form focus rings) follow the Barista brand too. */
+  --bs-primary: var(--lc-brand);
+  --bs-primary-rgb: 107, 22, 38;
+  --bs-link-color: var(--lc-brand);
+  --bs-link-hover-color: var(--lc-brand-dark);
+}
+
+[data-bs-theme='dark'] {
+  --lc-cream: #201210;
+  --lc-cream-dark: #2b1815;
+  --lc-text: #f6ead0;
+  --lc-text-muted: #cbb29e;
+  --lc-accent-light: #3a2018;
+}
+
+body {
+  background-color: var(--lc-cream);
+  color: var(--lc-text);
+  font-family: var(--lc-font-body);
+}
+
+h1, h2, h3, h4,
+.lc-hero-title,
+.lc-brand-text,
+.lc-section-title {
+  font-family: var(--lc-font-display);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--lc-brand);
+  --bs-btn-border-color: var(--lc-brand);
+  --bs-btn-hover-bg: var(--lc-brand-dark);
+  --bs-btn-hover-border-color: var(--lc-brand-dark);
+  --bs-btn-active-bg: var(--lc-brand-dark);
+  --bs-btn-active-border-color: var(--lc-brand-dark);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--lc-brand);
+  --bs-btn-border-color: var(--lc-brand);
+  --bs-btn-hover-bg: var(--lc-brand);
+  --bs-btn-hover-border-color: var(--lc-brand);
+}
+
+/* ---------- Sticky navbar ---------- */
+.lc-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: var(--lc-brand) !important;
+  border-bottom: 3px solid var(--lc-gold);
+  box-shadow: var(--lc-shadow-sm);
+}
+
+.lc-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: color var(--lc-transition);
+}
+
+.lc-navbar .nav-link:hover,
+.lc-navbar .nav-link:focus {
+  color: var(--lc-gold) !important;
+}
+
+.lc-navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.lc-navbar .navbar-toggler-icon {
+  filter: invert(1) grayscale(1) brightness(2);
+}
+
+.lc-brand-text {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--lc-gold) !important;
+  font-size: 1.4rem;
+}
+
+/* ---------- Hero banner ---------- */
+.lc-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--lc-brand) 0%, var(--lc-brand-dark) 100%);
+  color: #fff;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+  margin-inline: calc(50% - 50vw);
+  width: 100vw;
+}
+
+.lc-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 20%, rgba(201, 151, 58, 0.18) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.lc-hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 3rem 1.5rem;
+  max-width: 1140px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.lc-hero-title {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.lc-hero-subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.05rem;
+  max-width: 480px;
+}
+
+.lc-hero-image {
+  position: absolute;
+  right: 6%;
+  bottom: -30px;
+  width: 320px;
+  max-width: 32%;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4));
+  transition: transform 400ms ease;
+}
+
+.lc-hero:hover .lc-hero-image {
+  transform: translateY(-6px) rotate(-2deg);
+}
+
+/* ---------- Sticky search/category bar ---------- */
+.lc-subheader {
+  position: sticky;
+  top: 64px;
+  z-index: 1020;
+  background: var(--lc-cream);
+  padding-block: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.lc-category-scroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+}
+
+.lc-category-chip {
+  flex: 0 0 auto;
+  border-radius: 999px !important;
+  padding: 0.4rem 1rem !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: transform var(--lc-transition), background-color var(--lc-transition);
+  white-space: nowrap;
+}
+
+.lc-category-chip:hover {
+  transform: translateY(-1px);
+}
+
+/* ---------- Food / drink cards ---------- */
+.lc-food-card-link {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.lc-food-card-link:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lc-food-card {
+  border: none !important;
+  border-radius: var(--lc-radius) !important;
+  background: var(--lc-cream-dark);
+  box-shadow: var(--lc-shadow-sm);
+  transition: transform var(--lc-transition), box-shadow var(--lc-transition);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lc-food-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--lc-shadow-md);
+}
+
+.lc-food-card-img-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--lc-accent-light);
+  border-radius: var(--lc-radius) var(--lc-radius) 0 0;
+  flex-shrink: 0;
+}
+
+.lc-food-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+
+.lc-food-card:hover .lc-food-card-img-wrap img {
+  transform: scale(1.08);
+}
+
+.lc-food-card-price {
+  color: var(--lc-brand);
+  font-weight: 700;
+}
+
+/* ---------- Section titles (Barista-style eyebrow + serif heading) ---------- */
+.lc-section-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lc-gold);
+}
+
+.lc-section-title {
+  font-weight: 700;
+  color: var(--lc-brand);
+}
+
+/* ---------- Footer (Barista-style dark multi-column) ---------- */
+.lc-footer {
+  background: var(--lc-brand-dark);
+  color: rgba(255, 255, 255, 0.75);
+  border-top: 3px solid var(--lc-gold);
+}
+
+.lc-footer h6 {
+  color: var(--lc-gold);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.lc-footer a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color var(--lc-transition);
+}
+
+.lc-footer a:hover {
+  color: var(--lc-gold);
+}
+
+.lc-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ---------- Static content cards (forms, detail views — no hover-lift) ---------- */
+.lc-card {
+  border: none !important;
+  border-radius: var(--lc-radius) !important;
+  background: var(--lc-cream-dark);
+  box-shadow: var(--lc-shadow-sm);
+}
+
+/* ---------- Skeleton shimmer ---------- */
+.lc-skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--lc-cream-dark);
+  border-radius: 8px;
+}
+
+.lc-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: lc-shimmer 1.4s infinite;
+}
+
+@keyframes lc-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* ---------- Empty states ---------- */
+.lc-empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--lc-text-muted);
+}
+
+/* ---------- Cart drawer ---------- */
+.lc-cart-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-block: 0.75rem;
+}
+
+:focus-visible {
+  outline: 3px solid var(--lc-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Drink customize: option pill buttons ---------- */
+.lc-option-legend {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lc-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.lc-option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.lc-option-pill {
+  border: 1px solid rgba(43, 32, 26, 0.12);
+  background: var(--lc-cream);
+  color: var(--lc-text);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: background-color var(--lc-transition), border-color var(--lc-transition), transform var(--lc-transition);
+}
+
+.lc-option-pill:hover {
+  transform: translateY(-1px);
+}
+
+.lc-option-pill-selected {
+  background: var(--lc-gold-light);
+  border-color: var(--lc-gold);
+  color: var(--lc-brand-dark);
+}
+
+/* ---------- Machine code panel ---------- */
+.lc-machine-panel {
+  background: var(--lc-cream);
+  border-radius: var(--lc-radius);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--lc-shadow-sm);
+}
+
+.lc-machine-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lc-machine-panel-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lc-text-muted);
+}
+
+.lc-machine-badge {
+  background: var(--lc-accent-light);
+  color: var(--lc-brand-dark);
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.lc-machine-codes-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.lc-machine-code-box {
+  background: var(--lc-cream-dark);
+  border-radius: 10px;
+  text-align: center;
+  padding: 0.6rem 0.5rem;
+}
+
+.lc-machine-code-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lc-text-muted);
+}
+
+.lc-machine-code-value {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+}
+
+.lc-machine-payload {
+  background: var(--lc-brand-dark);
+  color: #fbead9;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.lc-generate-qr-btn {
+  background: var(--lc-brand-dark) !important;
+  border-color: var(--lc-brand-dark) !important;
+  border-radius: 999px !important;
+  padding: 0.85rem !important;
+  font-weight: 700;
+}
+
+/* ---------- QR display page ---------- */
+.lc-qr-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lc-text-muted);
+  margin-top: 1rem;
+}
+
+.lc-qr-frame {
+  width: fit-content;
+  background: #fff;
+  border: 1px solid rgba(43, 32, 26, 0.1);
+  border-radius: var(--lc-radius);
+  padding: 1.5rem;
+  box-shadow: var(--lc-shadow-sm);
+}
+
+.lc-qr-thumb {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--lc-accent-light);
+}
+
+.lc-qr-tag {
+  background: var(--lc-accent-light);
+  color: var(--lc-brand-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+}
